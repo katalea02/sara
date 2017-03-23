@@ -3,7 +3,13 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import footer from './components/footer'
+import nav from './components/nav'
+import test from './components/test'
 
+Vue.component('test-tag', test)
+Vue.component('nav-menu', nav)
+Vue.component('footertag', footer)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

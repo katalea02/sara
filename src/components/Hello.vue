@@ -1,32 +1,57 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
     <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://gitter.im/vuejs/vue" target="_blank">Gitter Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-      <br>
-      <li><a href="http://vuejs-templates.github.io/webpack/" target="_blank">Docs for This Template</a></li>
+      <li>
+        <button>Pause</button>
+        <button>Unpause</button>
+        <button @click="start">Start</button>
+        <button @click="stop">Stop</button>
+      </li>
     </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
-  </div>
+   <h2> {{timerCurrentTime}}</h2>
+    <nav-menu></nav-menu>
+    <footertag> </footertag>
+    <test-tag></test-tag>
+    </div>
 </template>
-
 <script>
+import Moment from 'moment'
+
 export default {
   name: 'hello',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Vue first project',
+      timerCurrentTime: Date.now().toLocaleString()
     }
+  },
+  methods: {
+    theTime () {
+      const timeInterval = setInterval(() => {
+        this.timerCurrentTime = Moment().format('MMMM Do YYYY, h:mm:ss a')
+      }, 1000)
+
+      console.log(timeInterval)
+    },
+    stop () {
+      const timeInterval = clearInterval(timeInterval)
+      console.log(timeInterval)
+    },
+    start () {
+      const timeInterval = setInterval(() => {
+        this.timerCurrentTime = Date.now()
+      }, 1000)
+
+      console.log(timeInterval)
+    }
+  },
+
+  created () {
+    this.theTime()
+    this.stop()
+    this.start()
+    Moment.lokale('sq')
   }
 }
 </script>
@@ -49,5 +74,15 @@ li {
 
 a {
   color: #42b983;
+}
+router-link {
+  text-decoration:none;
+}
+button {
+  width: 100px;
+  height: 35px;
+  background-color: #45B39D;
+  color: #efefef;
+  border-radius: 5px;
 }
 </style>
