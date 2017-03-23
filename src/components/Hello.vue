@@ -3,14 +3,22 @@
     <h1>{{ msg }}</h1>
     <ul>
       <li>
-        <button>Pause</button>
-        <button>Unpause</button>
+        <button @click="stop">Pause</button>
+        <button @click="start">Unpause</button>
         <button @click="start">Start</button>
         <button @click="stop">Stop</button>
       </li>
     </ul>
    <h2> {{timerCurrentTime}}</h2>
     <nav-menu></nav-menu>
+   <h3> Stopwatcher </h3>
+   <h3> {{ stopwatch }}</h3>
+   <ul>
+      <li>
+        <button @click="starts">StartStopwatcher</button>
+        <button @click="stops">StopStopwatcher</button>
+      </li>
+    </ul>
     <footertag> </footertag>
     <test-tag></test-tag>
     </div>
@@ -23,35 +31,37 @@ export default {
   data () {
     return {
       msg: 'Vue first project',
-      timerCurrentTime: Date.now().toLocaleString()
+      timerCurrentTime: Moment().format('MMMM Do YYYY, h:mm:ss a'),
+      timeInterval: '',
+      stopwatch: '00:00:00',
+      seconds: 0
     }
   },
   methods: {
-    theTime () {
-      const timeInterval = setInterval(() => {
-        this.timerCurrentTime = Moment().format('MMMM Do YYYY, h:mm:ss a')
-      }, 1000)
-
-      console.log(timeInterval)
-    },
     stop () {
-      const timeInterval = clearInterval(timeInterval)
-      console.log(timeInterval)
+      const clearTimeInterval = clearInterval(this.timeInterval)
+      console.log(clearTimeInterval)
     },
     start () {
-      const timeInterval = setInterval(() => {
-        this.timerCurrentTime = Date.now()
+      this.timeInterval = setInterval(() => {
+        this.timerCurrentTime = Moment().format('MMMM Do YYYY, h:mm:ss a')
       }, 1000)
-
-      console.log(timeInterval)
+      console.log(this.timeIntervals)
+    },
+    starts () {
+      this.timer = setInterval(() => {
+        this.seconds += 1
+        this.stopwatch = Moment().startOf('day').seconds(this.seconds).format('HH:mm:ss')
+      }, 1000)
+      console.log(this.timer)
+    },
+    stops () {
+      const clearTimer = clearInterval(this.timer)
+      console.log(clearTimer)
     }
   },
-
   created () {
-    this.theTime()
-    this.stop()
-    this.start()
-    Moment.lokale('sq')
+    Moment.locale('sq')
   }
 }
 </script>
@@ -79,7 +89,7 @@ router-link {
   text-decoration:none;
 }
 button {
-  width: 100px;
+  width: 150px;
   height: 35px;
   background-color: #45B39D;
   color: #efefef;
