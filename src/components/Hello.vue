@@ -1,26 +1,22 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
+  <div class="koha">
+    {{timerCurrentTime}}
+  </div>
+  <div class="permbajtje">
+    <h1> Stopwatch {{ stopwatch }}</h1>
     <ul>
       <li>
-        <button @click="stop">Pause</button>
-        <button @click="start">Unpause</button>
         <button @click="start">Start</button>
         <button @click="stop">Stop</button>
+        <button @click="pause">Pause</button>
+        <button @click="unpause">Unpause</button>
       </li>
     </ul>
-   <h2> {{timerCurrentTime}}</h2>
     <nav-menu></nav-menu>
-   <h3> Stopwatcher </h3>
-   <h3> {{ stopwatch }}</h3>
-   <ul>
-      <li>
-        <button @click="starts">StartStopwatcher</button>
-        <button @click="stops">StopStopwatcher</button>
-      </li>
-    </ul>
     <footertag> </footertag>
     <test-tag></test-tag>
+    </div>
     </div>
 </template>
 <script>
@@ -38,30 +34,40 @@ export default {
     }
   },
   methods: {
-    stop () {
-      const clearTimeInterval = clearInterval(this.timeInterval)
-      console.log(clearTimeInterval)
-    },
     start () {
-      this.timeInterval = setInterval(() => {
-        this.timerCurrentTime = Moment().format('MMMM Do YYYY, h:mm:ss a')
-      }, 1000)
-      console.log(this.timeIntervals)
-    },
-    starts () {
       this.timer = setInterval(() => {
         this.seconds += 1
         this.stopwatch = Moment().startOf('day').seconds(this.seconds).format('HH:mm:ss')
       }, 1000)
       console.log(this.timer)
     },
-    stops () {
+    stop () {
+      this.seconds = 0
+      this.stopwatch = '00:00:00'
+    },
+    pause () {
       const clearTimer = clearInterval(this.timer)
       console.log(clearTimer)
+    },
+    unpause () {
+      this.timer = setInterval(() => {
+        this.seconds += 1
+        this.stopwatch = Moment().startOf('day').seconds(this.seconds).format('HH:mm:ss')
+      }, 1000)
+      console.log(this.timer)
     }
   },
   created () {
     Moment.locale('sq')
+    this.time()
+  },
+  computed: {
+    time () {
+      this.timeInterval = setInterval(() => {
+        this.timerCurrentTime = Moment().format('MMMM Do YYYY, h:mm:ss a')
+      }, 1000)
+      console.log(this.timeIntervals)
+    }
   }
 }
 </script>
@@ -94,5 +100,13 @@ button {
   background-color: #45B39D;
   color: #efefef;
   border-radius: 5px;
+}
+.koha {
+  text-align: right;
+  margin-top: -250px;
+  padding-right: 10px;
+}
+.permbajtje {
+  padding-top: 250px;
 }
 </style>
