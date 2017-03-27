@@ -13,6 +13,8 @@
         <button @click="unpause">Unpause</button>
       </li>
     </ul>
+      <li v-for="item in this.elemente" style="width:100%;"> Veprimi: {{ item.veprimi }} Koha: {{ item.koha }} Stopwatch: {{ item.timer }} <hr>
+      </li>
     <nav-menu></nav-menu>
     <footertag> </footertag>
     <test-tag></test-tag>
@@ -33,8 +35,8 @@ export default {
       seconds: 0,
       fillo: 0,
       paused: 0,
-      elemente: [
-      ]
+      elemente: [],
+      logholder: []
     }
   },
   methods: {
@@ -50,12 +52,14 @@ export default {
       }
     },
     stop () {
+      clearInterval(this.timer)
       this.log('stop')
       this.paused = 0
       this.fillo = 0
-      clearInterval(this.timer)
       this.stopwatch = '00:00:00'
       this.seconds = 0
+      this.logholder.push({log: this.elemente})
+      this.elemente = []
     },
     pause () {
       this.log('pause')
