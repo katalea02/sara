@@ -7,7 +7,7 @@
     <h1> Stopwatch {{ stopwatch }}</h1>
     <ul>
       <li>
-        <button @click="start">Start</button>
+        <button @click="start" :disabled="paused == 1 ? true : false">Start</button>
         <button @click="stop">Stop</button>
         <button @click="pause">Pause</button>
         <button @click="unpause">Unpause</button>
@@ -30,11 +30,17 @@ export default {
       timerCurrentTime: Moment().format('MMMM Do YYYY, h:mm:ss a'),
       timeInterval: '',
       stopwatch: '00:00:00',
-      seconds: 0
+      seconds: 0,
+      fillo: 0,
+      paused: 0,
+      elemente: [
+      ]
     }
   },
   methods: {
     start () {
+      this.log('start')
+      this.fillo = 1
       if (this.seconds === 0) {
         this.timer = setInterval(() => {
           this.seconds += 1
@@ -44,20 +50,31 @@ export default {
       }
     },
     stop () {
+      this.log('stop')
+      this.paused = 0
+      this.fillo = 0
+      clearInterval(this.timer)
       this.stopwatch = '00:00:00'
       this.seconds = 0
-      clearInterval(this.timer)
     },
     pause () {
+      this.log('pause')
+      this.paused = 1
       const clearTimer = clearInterval(this.timer)
       console.log(clearTimer)
     },
     unpause () {
-      this.timer = setInterval(() => {
-        this.seconds += 1
-        this.stopwatch = Moment().startOf('day').seconds(this.seconds).format('HH:mm:ss')
-      }, 1000)
-      console.log(this.timer)
+      this.log('unpause')
+      if (this.fillo) {
+        this.timer = setInterval(() => {
+          this.seconds += 1
+          this.stopwatch = Moment().startOf('day').seconds(this.seconds).format('HH:mm:ss')
+        }, 1000)
+        console.log(this.timer)
+      }
+    },
+    log (lloji) {
+      this.elemente.push({ veprimi: lloji, koha: Moment().format('MMMM Do YYYY, h:mm:ss a'), timer: this.stopwatch })
     }
   },
   created () {
@@ -100,7 +117,7 @@ router-link {
 button {
   width: 150px;
   height: 35px;
-  background-color: #45B39D;
+  background-color: #41b883;
   color: #efefef;
   border-radius: 5px;
 }
