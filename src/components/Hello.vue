@@ -44,8 +44,9 @@ export default {
       }
     },
     stop () {
-      this.seconds = 0
       this.stopwatch = '00:00:00'
+      this.seconds = 0
+      clearInterval(this.timer)
     },
     pause () {
       const clearTimer = clearInterval(this.timer)
