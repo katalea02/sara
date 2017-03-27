@@ -35,11 +35,13 @@ export default {
   },
   methods: {
     start () {
-      this.timer = setInterval(() => {
-        this.seconds += 1
-        this.stopwatch = Moment().startOf('day').seconds(this.seconds).format('HH:mm:ss')
-      }, 1000)
-      console.log(this.timer)
+      if (this.seconds === 0) {
+        this.timer = setInterval(() => {
+          this.seconds += 1
+          this.stopwatch = Moment().startOf('day').seconds(this.seconds).format('HH:mm:ss')
+        }, 1000)
+        console.log(this.timer)
+      }
     },
     stop () {
       this.seconds = 0
